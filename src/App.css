@@ -1,0 +1,106 @@
+.header{
+    margin: 0;
+    height: 60px;
+    padding-top: 20px;
+    background-color: #000F52;
+    color: white;
+}
+
+.heading {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.runBtn{
+    background-color: red;
+    width: 90px;
+    height: 40px;
+    border: none;
+    margin-left: 530px;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.language {
+    display: flex;
+    padding-top: 5px;
+    margin-right: 20px;
+    float: right;
+}
+
+.lang{
+    margin-right: 5px;
+}
+
+.sides{
+    display: flex;
+}
+
+.leftSide{
+    /* height: 100%; */
+    width: 55%;
+}
+
+.rightSide{
+    width: 45%;
+    margin: 0;
+}
+
+.sideTitle{
+    height: 10px;
+    text-align: center;
+}
+
+#codeTextArea {
+    overflow-y: scroll;
+    width: 99%; 
+    background: #cccccc52;
+    height:84vh;
+    font-size: 15px;
+    resize: none; 
+    outline: none;
+    display:block;
+}
+
+#output {
+    resize: none;
+    width: 99%;
+    height: 49vh;
+    overflow-y: scroll;
+    outline: none;
+    background: #cccccc52;
+    display:block;
+}
+
+#userInput {
+    display:block;
+    resize: none;
+    width: 99%;
+    height: 30.4vh;
+    overflow-y: scroll;
+    outline: none;
+    background: #cccccc52;
+}
+
+.inp{
+    background-color: #304FAF;
+    color: white;
+    height: 25px;
+    margin: 0;
+}
+
+.ide{
+    background-color: #304FAF;
+    color: white;
+    height: 25px;
+    margin: 0;
+}
+
+.out{
+    background-color: #304FAF;
+    color: white;
+    height: 25px;
+    margin: 0;
+}
