@@ -154,8 +154,8 @@ export default class App extends Component {
                         </span>
 
                         <div id="inputArea">
-                            <textarea id="userInput" onChange={this.userInput}></textarea>
-                            <textarea id="userOutput" onChange={this.userOutput}></textarea>
+                            <textarea id="userInput" onChange={this.userInput} placeholder = "Enter Input Here"></textarea>
+                            <textarea id="userOutput" onChange={this.userOutput} placeholder = "Enter Expected Output Here"></textarea>
                         </div>
                         
                     </div>
