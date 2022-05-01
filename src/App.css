@@ -60,7 +60,6 @@
 
 #codeTextArea {
     font-family: 'Fira Code', monospace;
-    overflow-y: scroll;
     width: 99%; 
     background: #cccccc52;
     height:85.5vh;
@@ -75,7 +74,6 @@
     resize: none;
     width: 99%;
     height: 49vh;
-    overflow-y: scroll;
     outline: none;
     background: #cccccc52;
     display:block;
@@ -87,7 +85,6 @@
     resize: none;
     width: 49.5%;
     height: 32.4vh;
-    overflow-y: scroll;
     outline: none;
     background: #cccccc52;
 }
@@ -98,7 +95,6 @@
     resize: none;
     width: 49.5%;
     height: 32.4vh;
-    overflow-y: scroll;
     outline: none;
     background: #cccccc52;
 }
