@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import "./App.css"
+
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            langId:localStorage.getItem('language_Id'),
             input: localStorage.getItem('input'),
             output: "",
-            language_id:localStorage.getItem('language_Id'),
-            user_input: "",
+            userInput: "",
+            userOutput: ""
         };
     }
 
-    input = (event) => {
+    codeInput = (event) => {
         event.preventDefault();
         this.setState({ input: event.target.value });
         localStorage.setItem('input', event.target.value)
@@ -19,13 +21,17 @@ export default class App extends Component {
 
     userInput = (event) => {
         event.preventDefault();
-        this.setState({ user_input: event.target.value });
+        this.setState({ userInput: event.target.value });
+    };
+
+    userOutput = (event) => {
+        event.preventDefault();
+        this.setState({ userOutput: event.target.value });
     };
 
     language = (event) => {
-        // console.log(event.target.value)
         event.preventDefault();
-        this.setState({ language_id: event.target.value });
+        this.setState({ langId: event.target.value });
         localStorage.setItem('language_Id',event.target.value)
     };
 
@@ -35,20 +41,21 @@ export default class App extends Component {
         outputText.innerHTML = "";
         outputText.innerHTML += "Compiling...\n";
         console.log("POST")
+
         const response = await fetch(`https://judge0-ce.p.rapidapi.com/submissions`,
             {
                 method: "POST",
                 headers: {
                     "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
-                    "x-rapidapi-key": "74bf99fc21msh2b4ff766e24ca83p1c722cjsn261aedcec40b", 
+                    "x-rapidapi-key": "74bf99fc21msh2b4ff766e24ca83p1c722cjsn261aedcec40b", //Confidencial🔐
                     'content-type': 'application/json',
                     'Content-Type': 'application/json',
                     accept: "application/json",
                 },
                 body: JSON.stringify({
                     source_code: this.state.input,
-                    stdin: this.state.user_input,
-                    language_id: this.state.language_id,
+                    stdin: this.state.userInput,
+                    language_id: this.state.langId,
                 }),
             }
         );
@@ -57,7 +64,7 @@ export default class App extends Component {
         const jsonResponse = await response.json();
 
         let jsonGetSolution = {
-            status: { description: "Queue" },
+            status: { description: "Please Wait" },
             stderr: null,
             compile_output: null,
         };
@@ -67,7 +74,7 @@ export default class App extends Component {
             jsonGetSolution.stderr == null &&
             jsonGetSolution.compile_output == null
         ){
-            outputText.innerHTML = `Creating Submission ... \nSubmission Created ...\nChecking Submission Status\nstatus : ${jsonGetSolution.status.description}`;
+            outputText.innerHTML = `Creating Submission ... \nSubmission Created ...\nChecking Submission Status \n${jsonGetSolution.status.description}`;
             if (jsonResponse.token) {
                 console.log("GET")
                 let url = `https://judge0-ce.p.rapidapi.com/submissions/${jsonResponse.token}?base64_encoded=true&fields=*`
@@ -75,23 +82,35 @@ export default class App extends Component {
                     method: "GET",
                     headers: {
                         "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
-                        "x-rapidapi-key": "74bf99fc21msh2b4ff766e24ca83p1c722cjsn261aedcec40b", 
-                        // "content-type": "application/json",
+                        "x-rapidapi-key": "74bf99fc21msh2b4ff766e24ca83p1c722cjsn261aedcec40b", //Confidencial🔐
                     },
                 });
                 jsonGetSolution = await getSolution.json();
             }
         }
-        if(jsonGetSolution.stdout){
-            const output = atob(jsonGetSolution.stdout);
-            outputText.innerHTML = "";
-            outputText.innerHTML += `Results :\n${output}\nExecution Time : ${jsonGetSolution.time} Secs\nMemory used : ${jsonGetSolution.memory} bytes`;
 
+        if(jsonGetSolution.stdout){
+            let result = "nAn";
+            const uO = this.state.userOutput;
+            const output = atob(jsonGetSolution.stdout);
+            // eslint-disable-next-line
+            if(output !== uO){
+                console.log("output : " + output)
+                console.log("uO : " + uO)
+                console.log("typeof output : " + typeof output)
+                console.log("typeof uO : "+typeof uO)
+
+                result = "Wrong : Output Dosen't Matches With Expected Output";
+            }else{
+                result = "Correct : Output Matches With Expected Output ";
+            }
+
+            outputText.innerHTML = "";
+            outputText.innerHTML += `Result :\n${output}\n\n\n\nExecution Time Taken : ${jsonGetSolution.time} Secs.\nMemory used : ${jsonGetSolution.memory} bytes \n\n${result}`;
         }else if(jsonGetSolution.stderr) {
             const error = atob(jsonGetSolution.stderr);
             outputText.innerHTML = "";
             outputText.innerHTML += `\n Error :${error}`;
-        
         }else{
             const compilation_error = atob(jsonGetSolution.compile_output);
             outputText.innerHTML = "";
@@ -104,12 +123,10 @@ export default class App extends Component {
             <div id='main'>
 
                 <div className="header">  
-                    <span className="heading">
-                        Online Code Editor
-                    </span>
+                    <span className="heading">Online Code Editor</span>
                     <span className="language">
                         <label htmlFor="tags" className="lang"><b>Language:</b></label>
-                        <select value={this.state.language_id} onChange={this.language} id="tags">
+                        <select value={this.state.langId} onChange={this.language} id="tags">
                             <option value="54">C++</option>
                             <option value="50">C</option>
                             <option value="62">Java</option>
@@ -120,23 +137,30 @@ export default class App extends Component {
                 </div>
 
                 <div className='sides'>
-
                     <div className='leftSide'>        
                         <p className='sideTitle ide'>Code</p> 
-                        <textarea id="codeTextArea" required name="solution" className="source" onChange={this.input} 
+                        <textarea id="codeTextArea" required name="solution" onChange={this.codeInput} 
                             value={this.state.input} placeholder = "Write Your Code Here">
                         </textarea>
                     </div>
 
                     <div className='rightSide'>
                         <p className='sideTitle out'>Output</p>
-                        <textarea id="output"></textarea>
-                        <p className='sideTitle inp'>Input</p>
-                        <textarea id="userInput" onChange={this.userInput}></textarea>
+                        <textarea id="output" readOnly></textarea>
+
+                        <span id="titleSpan">
+                            <p className='sideTitle inp'>Input</p>
+                            <p className='sideTitle exOut'>Expected Output</p>
+                        </span>
+
+                        <div id="inputArea">
+                            <textarea id="userInput" onChange={this.userInput}></textarea>
+                            <textarea id="userOutput" onChange={this.userOutput}></textarea>
+                        </div>
+                        
                     </div>
 
                 </div>
-
             </div>
         );
     }

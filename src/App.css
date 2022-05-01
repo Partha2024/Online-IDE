@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
 .header{
     margin: 0;
     height: 60px;
@@ -30,6 +32,10 @@
     float: right;
 }
 
+#tags{
+    font-family: 'Fira Code', monospace;
+}
+
 .lang{
     margin-right: 5px;
 }
@@ -39,7 +45,6 @@
 }
 
 .leftSide{
-    /* height: 100%; */
     width: 55%;
 }
 
@@ -54,10 +59,11 @@
 }
 
 #codeTextArea {
+    font-family: 'Fira Code', monospace;
     overflow-y: scroll;
     width: 99%; 
     background: #cccccc52;
-    height:84vh;
+    height:85.5vh;
     font-size: 15px;
     resize: none; 
     outline: none;
@@ -65,6 +71,7 @@
 }
 
 #output {
+    font-family: 'Fira Code', monospace;
     resize: none;
     width: 99%;
     height: 49vh;
@@ -75,31 +82,60 @@
 }
 
 #userInput {
+    font-family: 'Fira Code', monospace;
     display:block;
     resize: none;
-    width: 99%;
-    height: 30.4vh;
+    width: 49.5%;
+    height: 32.4vh;
     overflow-y: scroll;
     outline: none;
     background: #cccccc52;
 }
 
+#userOutput {
+    font-family: 'Fira Code', monospace;
+    display:block;
+    resize: none;
+    width: 49.5%;
+    height: 32.4vh;
+    overflow-y: scroll;
+    outline: none;
+    background: #cccccc52;
+}
+
+#inputArea{
+    display: flex;
+}
+
+#titleSpan{
+    display: flex;
+}
+
 .inp{
-    background-color: #304FAF;
+    background-color: #01298B;
     color: white;
     height: 25px;
     margin: 0;
+    width: 50%;
+}
+
+.exOut{
+    background-color: #01298B;
+    color: white;
+    height: 25px;
+    margin: 0;
+    width: 50%;
 }
 
 .ide{
-    background-color: #304FAF;
+    background-color: #01298B;
     color: white;
     height: 25px;
     margin: 0;
 }
 
 .out{
-    background-color: #304FAF;
+    background-color: #01298B;
     color: white;
     height: 25px;
     margin: 0;
