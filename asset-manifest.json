@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Online-IDE/static/css/main.befa3d07.css",
+    "main.js": "/Online-IDE/static/js/main.fd6e2a6d.js",
+    "index.html": "/Online-IDE/index.html",
+    "main.befa3d07.css.map": "/Online-IDE/static/css/main.befa3d07.css.map",
+    "main.fd6e2a6d.js.map": "/Online-IDE/static/js/main.fd6e2a6d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.befa3d07.css",
+    "static/js/main.fd6e2a6d.js"
+  ]
+}
